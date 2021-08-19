@@ -35,8 +35,14 @@ jobs:
       - name: Docker login
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      # Runs a set of commands using the runners shell
+      - name: Docker build (will fail)
+        run: |
+          docker build . -t $image_name
           
       # Runs a set of commands using the runners shell
       - name: Docker logout
+        if: ${{ always() }}
         run: |
           docker logout
