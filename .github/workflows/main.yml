@@ -33,7 +33,7 @@ jobs:
           if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
               echo "PACKAGE_REPOSITORY=ghcr.io/nuance-internal/srm" >> "$GITHUB_ENV"
           else
-              echo "PACKAGE_REPOSITORY=ghcr.io/nuance-internal/srm/${GITHUB_REF##*/}/srm"" >> "$GITHUB_ENV"
+              echo "PACKAGE_REPOSITORY=ghcr.io/nuance-internal/srm/${GITHUB_REF##*/}/srm" >> "$GITHUB_ENV"
           fi
           
       # Echo env variables
