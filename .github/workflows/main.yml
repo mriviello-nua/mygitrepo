@@ -44,7 +44,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Echo package repository
         run: |
-          echo "Package repository = "ghcr.io/nuance-internal/srm/${{ steps.extract_branch.outputs.branch }}/srm"
+          echo "Package repository = ghcr.io/nuance-internal/srm/${{ steps.extract_branch.outputs.branch }}/srm"
           
       # Runs a set of commands using the runners shell
       - name: Docker build (will fail)
