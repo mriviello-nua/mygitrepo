@@ -29,10 +29,14 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo "${{ github.run_id }}-${{ github.run_number }}"
+        run: echo "Github run number = ${{ github.run_number }}"
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Docker login
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+      # Runs a set of commands using the runners shell
+      - name: Docker logout
+        run: |
           docker logout
