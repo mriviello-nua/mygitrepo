@@ -31,11 +31,21 @@ jobs:
       - name: Run a one-line script
         run: echo "Github run number = ${{ github.run_number }}"
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+  
       # Runs a set of commands using the runners shell
       - name: Docker login
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       
+      # Runs a set of commands using the runners shell
+      - name: Echo package repository
+        run: |
+          echo "Package repository = "ghcr.io/nuance-internal/srm/${{ steps.extract_branch.outputs.branch }}/srm"
+          
       # Runs a set of commands using the runners shell
       - name: Docker build (will fail)
         if:
