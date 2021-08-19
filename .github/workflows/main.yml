@@ -27,19 +27,26 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo "Github run number = ${{ github.run_number }}"
+      # Set env variables
+      - name: Set environment for branch
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+              echo "PACKAGE_REPOSITORY=ghcr.io/nuance-internal/srm" >> "$GITHUB_ENV"
+          else
+              echo "PACKAGE_REPOSITORY=ghcr.io/nuance-internal/srm/${GITHUB_REF##*/}/srm"" >> "$GITHUB_ENV"
+          fi
+          
+      # Echo env variables
+      - name: Run echo
+        run: |
+          echo "Github run number = ${{ github.run_number }}"
+          echo "IMAGE_NAME = ${{ env.IMAGE_NAME }}"
+          echo "Package repository = ${{ env.PACKAGE_REPOSITORY }}"
   
       # Runs a set of commands using the runners shell
       - name: Docker login
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      
-      # Runs a set of commands using the runners shell
-      - name: Echo package repository
-        run: |
-          echo "Package repository = ghcr.io/nuance-internal/srm/${GITHUB_REF##*/}/srm"
           
       # Runs a set of commands using the runners shell
       - name: Docker build (will fail)
