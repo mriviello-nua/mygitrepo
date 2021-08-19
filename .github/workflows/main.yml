@@ -38,6 +38,12 @@ jobs:
       
       # Runs a set of commands using the runners shell
       - name: Docker build (will fail)
+        if:
+          contains('
+            refs/heads/dev
+            refs/heads/staging
+            refs/heads/production
+            ', github.ref)
         run: |
           docker build . -t $image_name
           
