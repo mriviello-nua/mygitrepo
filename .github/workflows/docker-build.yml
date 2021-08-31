@@ -26,6 +26,7 @@ jobs:
       # Attempt Docker login
       - name: Docker login
         run: |
+          echo "Github run number = ${{ github.run_number }}"
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       # Attempt Docker logout
